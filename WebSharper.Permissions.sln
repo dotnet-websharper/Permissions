@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Permissions", "WebSharper.Permissions\WebSharper.Permissions.fsproj", "{B16B8DDD-4454-42B3-AF22-45A94F0036CB}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Permissions.Sample", "WebSharper.Permissions.Sample\WebSharper.Permissions.Sample.fsproj", "{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B16B8DDD-4454-42B3-AF22-45A94F0036CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B16B8DDD-4454-42B3-AF22-45A94F0036CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B16B8DDD-4454-42B3-AF22-45A94F0036CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
