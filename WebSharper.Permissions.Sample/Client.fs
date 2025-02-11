@@ -24,10 +24,18 @@ module Client =
             let permissionQuery = permissions.Query(PermissionDescriptor(name = permissionName))
 
             permissionQuery.Then(fun result -> 
-                permissionStatus.Value <- $"{permissionName} permission: {result.State}"
+                permissionStatus := $"{permissionName} permission: {result.State}"
             ).Catch(fun _ -> 
-                permissionStatus.Value <- $"Permission {permissionName} not supported"
+                permissionStatus := $"Permission {permissionName} not supported"
             )
+
+        let requestGeolocation() = 
+            JS.Window.Navigator.Geolocation.GetCurrentPosition((fun position ->
+                permissionStatus := $"Latitude: {position.Coords.Latitude}, Longitude: {position.Coords.Longitude}"
+            ), (fun error ->
+                permissionStatus := $"Geolocation error: ${error.Message}"
+            ))
+
 
         IndexTemplate.Main()
             .checkGeolocationPermission(fun _ -> 
@@ -36,18 +44,7 @@ module Client =
                 } 
                 |> Async.Start
             )
-            .checkMicrophonePermission(fun _ -> 
-                async { 
-                    do! checkPermission("microphone").AsAsync()
-                } 
-                |> Async.Start
-            )
-            .checkNotificationPermission(fun _ -> 
-                async { 
-                    do! checkPermission("notifications").AsAsync()
-                } 
-                |> Async.Start
-            )
+            .requestGeolocation(fun _ -> requestGeolocation())
             .status(permissionStatus.View)
             .Doc()
         |> Doc.RunById "main"
