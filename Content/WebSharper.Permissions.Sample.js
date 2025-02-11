@@ -381,7 +381,7 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
 (function(Global)
 {
  "use strict";
- var WebSharper,Permissions,Sample,Client,Obj,UI,Var$1,Var,Operators,EventTarget,Templating,Runtime,Server,TemplateInstance,Arrays,ProviderBuilder,Handler,Unchecked,WebSharper$Permissions$Sample_Templates,JavaScript,Pervasives,WindowOrWorkerGlobalScope,JS,ConcreteVar,Snap,TemplateHole,TemplateHoleModule,TextView,System,Guid,EventQ,Concurrency,Promise,Client$1,Templates,Doc,Abbrev,Fresh,Collections,Dictionary,Node,Object,AsyncBody,CT,HashSet,Seq,TemplateInitializer,VarStr,VarFloatUnchecked,VarBool,VarDateTime,VarFile,VarDomElement,View,Numeric,Scheduler,Error,NonStandardPromiseRejectionException,SC$1,DictionaryUtil,Enumerator,T,SC$2,Docs,SC$3,DocElemNode,CharacterData,OperationCanceledException,CancellationTokenSource,Blob,Elt,Element,Prepare,Slice,DomUtility,KeyCollection,An,Settings,Mailbox,Attrs,Dyn,Attrs$1,Elt$1,Text,Attribute,Event,AttrModule,AttrProxy,AfterRender,AfterRenderQ,List,T$1,Strings,Array,Updates,ValueCollection,Docs$1,RunState,NodeSet,Anims,SC$4,HashSetUtil,SC$5,SC$6,AppendList,DynamicAttrNode,KeyNotFoundException,SC$7,Easing,HashSet$1,BindVar,String,CheckedInput,DomNodes,Char,DateUtil,Lazy,SC$8,Queue,LazyExtensionsProxy,LazyRecord,Runtime$1,console,Math,Date;
+ var WebSharper,Permissions,Sample,Client,Obj,UI,Var$1,Operators,Templating,Runtime,Server,TemplateInstance,Arrays,ProviderBuilder,Handler,Var,Unchecked,WebSharper$Permissions$Sample_Templates,EventTarget,WindowOrWorkerGlobalScope,JavaScript,JS,Pervasives,ConcreteVar,Snap,TemplateHole,TemplateHoleModule,TextView,System,Guid,EventQ,Concurrency,Promise,Client$1,Templates,Doc,Abbrev,Fresh,Collections,Dictionary,Node,Object,AsyncBody,CT,HashSet,Seq,TemplateInitializer,VarStr,VarFloatUnchecked,VarBool,VarDateTime,VarFile,VarDomElement,View,Numeric,Scheduler,Error,NonStandardPromiseRejectionException,SC$1,DictionaryUtil,Enumerator,T,SC$2,Docs,SC$3,DocElemNode,CharacterData,OperationCanceledException,CancellationTokenSource,Blob,Elt,Element,Prepare,Slice,DomUtility,KeyCollection,An,Settings,Mailbox,Attrs,Dyn,Attrs$1,Elt$1,Text,Attribute,Event,AttrModule,AttrProxy,AfterRender,AfterRenderQ,List,T$1,Strings,Array,Updates,ValueCollection,Docs$1,RunState,NodeSet,Anims,SC$4,HashSetUtil,SC$5,SC$6,AppendList,DynamicAttrNode,KeyNotFoundException,SC$7,Easing,HashSet$1,BindVar,String,CheckedInput,DomNodes,Char,DateUtil,Lazy,SC$8,Queue,LazyExtensionsProxy,LazyRecord,Runtime$1,console,Math,Date;
  WebSharper=Global.WebSharper=Global.WebSharper||{};
  Permissions=WebSharper.Permissions=WebSharper.Permissions||{};
  Sample=Permissions.Sample=Permissions.Sample||{};
@@ -389,9 +389,7 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
  Obj=WebSharper.Obj=WebSharper.Obj||{};
  UI=WebSharper.UI=WebSharper.UI||{};
  Var$1=UI.Var$1=UI.Var$1||{};
- Var=UI.Var=UI.Var||{};
  Operators=WebSharper.Operators=WebSharper.Operators||{};
- EventTarget=Global.EventTarget;
  Templating=UI.Templating=UI.Templating||{};
  Runtime=Templating.Runtime=Templating.Runtime||{};
  Server=Runtime.Server=Runtime.Server||{};
@@ -399,12 +397,14 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
  Arrays=WebSharper.Arrays=WebSharper.Arrays||{};
  ProviderBuilder=Server.ProviderBuilder=Server.ProviderBuilder||{};
  Handler=Server.Handler=Server.Handler||{};
+ Var=UI.Var=UI.Var||{};
  Unchecked=WebSharper.Unchecked=WebSharper.Unchecked||{};
  WebSharper$Permissions$Sample_Templates=Global.WebSharper$Permissions$Sample_Templates=Global.WebSharper$Permissions$Sample_Templates||{};
- JavaScript=WebSharper.JavaScript=WebSharper.JavaScript||{};
- Pervasives=JavaScript.Pervasives=JavaScript.Pervasives||{};
+ EventTarget=Global.EventTarget;
  WindowOrWorkerGlobalScope=Global.WindowOrWorkerGlobalScope;
+ JavaScript=WebSharper.JavaScript=WebSharper.JavaScript||{};
  JS=JavaScript.JS=JavaScript.JS||{};
+ Pervasives=JavaScript.Pervasives=JavaScript.Pervasives||{};
  ConcreteVar=UI.ConcreteVar=UI.ConcreteVar||{};
  Snap=UI.Snap=UI.Snap||{};
  TemplateHole=UI.TemplateHole=UI.TemplateHole||{};
@@ -509,7 +509,7 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
  Date=Global.Date;
  Client.Main=function()
  {
-  var permissionStatus,permissions,_,b,s,_this,t,t$1,t$2,p,i;
+  var permissionStatus,permissions,_,b,s,_this,t,t$1,p,i;
   function checkPermission(permissionName)
   {
    return(permissions.query({
@@ -522,11 +522,21 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
     return permissionStatus.Set("Permission "+Global.String(permissionName)+" not supported");
    });
   }
+  function requestGeolocation()
+  {
+   self.navigator.geolocation.getCurrentPosition(function(position)
+   {
+    return permissionStatus.Set("Latitude: "+Global.String(position.coords.latitude)+", Longitude: "+Global.String(position.coords.longitude));
+   },function(error)
+   {
+    return permissionStatus.Set("Geolocation error: $"+Global.String(error.message));
+   });
+  }
   permissionStatus=Var$1.Create$1("");
   permissions=self.navigator.permissions;
-  _=(b=(s=permissionStatus.get_View(),(_this=(t=(t$1=(t$2=new ProviderBuilder.New$1(),(t$2.h.push(Handler.EventQ2(t$2.k,"checkgeolocationpermission",function()
+  _=(b=(s=permissionStatus.get_View(),(_this=(t=(t$1=new ProviderBuilder.New$1(),(t$1.h.push(Handler.EventQ2(t$1.k,"checkgeolocationpermission",function()
   {
-   return t$2.i;
+   return t$1.i;
   },function()
   {
    var _$1;
@@ -537,32 +547,12 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
      return Concurrency.Return(null);
     });
    })),null);
-  })),t$2)),(t$1.h.push(Handler.EventQ2(t$1.k,"checkmicrophonepermission",function()
-  {
-   return t$1.i;
-  },function()
-  {
-   var _$1;
-   Concurrency.Start((_$1=null,Concurrency.Delay(function()
-   {
-    return Concurrency.Bind(Promise.AsAsync(checkPermission("microphone")),function()
-    {
-     return Concurrency.Return(null);
-    });
-   })),null);
-  })),t$1)),(t.h.push(Handler.EventQ2(t.k,"checknotificationpermission",function()
+  })),t$1)),(t.h.push(Handler.EventQ2(t.k,"requestgeolocation",function()
   {
    return t.i;
   },function()
   {
-   var _$1;
-   Concurrency.Start((_$1=null,Concurrency.Delay(function()
-   {
-    return Concurrency.Bind(Promise.AsAsync(checkPermission("notifications")),function()
-    {
-     return Concurrency.Return(null);
-    });
-   })),null);
+   requestGeolocation();
   })),t)),(_this.h.push(new TextView.New("status",s)),_this))),(p=Handler.CompleteHoles(b.k,b.h,[]),(i=new TemplateInstance.New(p[1],WebSharper$Permissions$Sample_Templates.main(p[0])),b.i=i,i))).get_Doc();
   Templates.LoadLocalTemplates("");
   Doc.RunById("main",_);
@@ -589,11 +579,6 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
    $1:[]
   }),v);
  };
- Var=UI.Var=Runtime$1.Class({},Obj,Var);
- Var.New=Runtime$1.Ctor(function()
- {
-  Obj.New.call(this);
- },Var);
  Operators.FailWith=function(msg)
  {
   throw new Error(msg);
@@ -736,6 +721,11 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
    $0:allVars
   }];
  };
+ Var=UI.Var=Runtime$1.Class({},Obj,Var);
+ Var.New=Runtime$1.Ctor(function()
+ {
+  Obj.New.call(this);
+ },Var);
  Unchecked.Equals=function(a,b)
  {
   var m,eqR,k,k$1;
@@ -940,6 +930,13 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
    $0:"main"
   },h):void 0;
  };
+ JS.GetFieldValues=function(o)
+ {
+  var r,k;
+  r=[];
+  for(var k$1 in o)r.push(o[k$1]);
+  return r;
+ };
  Pervasives.NewFromSeq=function(fields)
  {
   var r,e,f;
@@ -958,13 +955,6 @@ if(!p.closest){p.closest=function(s){var e=this;while(e&&e.nodeType==1){if(e.mat
    if(typeof e=="object"&&"Dispose"in e)
     e.Dispose();
   }
-  return r;
- };
- JS.GetFieldValues=function(o)
- {
-  var r,k;
-  r=[];
-  for(var k$1 in o)r.push(o[k$1]);
   return r;
  };
  ConcreteVar=UI.ConcreteVar=Runtime$1.Class({
