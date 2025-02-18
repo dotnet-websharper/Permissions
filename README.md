@@ -53,19 +53,6 @@ The repository consists of two main projects:
 4. Open the hosted demo to see the Sample project in action:
    [https://dotnet-websharper.github.io/Permissions/](https://dotnet-websharper.github.io/Permissions/)
 
-## Why Use the Permissions API
-
-The Permissions API allows web applications to manage and query the status of various browser permissions. Key benefits include:
-
-1. **Improved User Experience**: Request permissions proactively and provide better feedback to users.
-2. **Enhanced Security**: Prevent unnecessary permission prompts by checking the current status.
-3. **Fine-Grained Control**: Determine whether a feature (e.g., notifications, microphone) is granted, denied, or needs user approval.
-4. **Seamless Integration**: Works with other Web APIs like Notifications, Geolocation, and Microphone.
-
-**Note:** If permission prompts do not appear, please check and allow the required permissions manually in your browser settings.
-
-Integrating the Permissions API with WebSharper allows developers to create interactive and secure web applications in F#.
-
 ## How to Use the Permissions API
 
 ### Example Usage
@@ -137,5 +124,7 @@ module Client =
 ```
 
 This example demonstrates how to check the status of a permission before requesting access.
+
+**Note:** If permission prompts do not appear, please check and allow the required permissions manually in your browser settings.
 
 For a complete implementation, refer to the [Sample Project](https://dotnet-websharper.github.io/Permissions/).
