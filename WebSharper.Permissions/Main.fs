@@ -32,7 +32,9 @@ module Definition =
             "state" =? PermissionState.Type
 
             "onchange" =@ T<unit> ^-> T<unit>
+            |> ObsoleteWithMessage "Use OnChange instead"
             "onchange" =@ T<Dom.Event> ^-> T<unit>
+            |> WithSourceName "OnChange"
         ]
 
     let Permissions =
