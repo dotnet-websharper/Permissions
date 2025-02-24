@@ -31,6 +31,7 @@ module Definition =
             "name" =? T<string>
             "state" =? PermissionState.Type
 
+            "onchange" =@ T<unit> ^-> T<unit>
             "onchange" =@ T<Dom.Event> ^-> T<unit>
         ]
 
