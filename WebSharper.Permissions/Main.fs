@@ -31,7 +31,7 @@ module Definition =
             "name" =? T<string>
             "state" =? PermissionState.Type
 
-            "onchange" =@ T<unit> ^-> T<unit>
+            "onchange" =@ T<Dom.Event> ^-> T<unit>
         ]
 
     let Permissions =
@@ -46,9 +46,16 @@ module Definition =
             "permissions" =? Permissions
         ]
 
+    let WorkerNavigator =
+        Class "WorkerNavigator"
+        |+> Instance [
+            "permissions" =? Permissions
+        ]
+
     let Assembly =
         Assembly [
             Namespace "WebSharper.Permissions" [
+                WorkerNavigator
                 Navigator
                 Permissions
                 PermissionStatus
