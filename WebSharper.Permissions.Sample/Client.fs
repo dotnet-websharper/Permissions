@@ -33,7 +33,7 @@ module Client =
             JS.Window.Navigator.Geolocation.GetCurrentPosition((fun position ->
                 permissionStatus := $"Latitude: {position.Coords.Latitude}, Longitude: {position.Coords.Longitude}"
             ), (fun error ->
-                permissionStatus := $"Geolocation error: ${error.Message}"
+                permissionStatus := $"Geolocation error: {error.Message}"
             ))
 
 
