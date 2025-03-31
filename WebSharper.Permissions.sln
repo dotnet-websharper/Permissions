@@ -7,6 +7,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Permissions", "W
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Permissions.Sample", "WebSharper.Permissions.Sample\WebSharper.Permissions.Sample.fsproj", "{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Permissions.Extensions", "WebSharper.Permissions.Extensions\WebSharper.Permissions.Extensions.fsproj", "{F07AE9BC-5D6C-42A6-A454-28B6A80592F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{299539DB-CA08-48CA-82C9-9A84ABE2FAC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07AE9BC-5D6C-42A6-A454-28B6A80592F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07AE9BC-5D6C-42A6-A454-28B6A80592F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07AE9BC-5D6C-42A6-A454-28B6A80592F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07AE9BC-5D6C-42A6-A454-28B6A80592F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

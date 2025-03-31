@@ -18,7 +18,7 @@ module Client =
     let Main () =
         let permissionStatus = Var.Create ""
 
-        let permissions = As<Navigator>(JS.Window.Navigator).Permissions        
+        let permissions = JS.Window.Navigator.Permissions        
 
         let checkPermission(permissionName: string) = 
             let permissionQuery = permissions.Query(PermissionDescriptor(name = permissionName))

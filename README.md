@@ -81,7 +81,7 @@ module Client =
         let permissionStatus = Var.Create ""
 
         // Access the browser's Permissions API
-        let permissions = As<Navigator>(JS.Window.Navigator).Permissions
+        let permissions = JS.Window.Navigator.Permissions
 
         // Function to check the status of a given permission
         let checkPermission(permissionName: string) =
