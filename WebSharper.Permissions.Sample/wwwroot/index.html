@@ -1,31 +1,36 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Permissions API Example</title>
+    <title>WebSharper Permissions API Demo</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%234f46e5'/%3E%3Cpath d='M8 3l4 2v3c0 2.5-1.7 4.2-4 5-2.3-.8-4-2.5-4-5V5z' fill='white'/%3E%3C/svg%3E" />
     <link rel="stylesheet" type="text/css" href="Content/WebSharper.Permissions.Sample.css" />
-    <style>
-        /* Don't show the not-yet-loaded templates */
-        [ws-template], [ws-children-template] { display: none; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="site.css" />
     <script type="module" src="Content/WebSharper.Permissions.Sample.head.js"></script>
 </head>
 <body>
-    <h1>Permissions API Demo</h1>
-    <div id="main" ws-children-template="Main">        
+    <main class="page">
+        <header class="hero">
+            <h1>Permissions API Demo</h1>
+            <p class="lede">
+                Query and observe the permission state of browser features with the
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API" target="_blank" rel="noreferrer">Permissions API</a>.
+                The page must run in a secure context (HTTPS or localhost).
+            </p>
+        </header>
 
-        <button ws-onclick="checkGeolocationPermission">Check Geolocation Permission</button>
-        <button ws-onclick="requestGeolocation">Request Geolocation</button>
+        <section class="card">
+            <h2>Permission checks</h2>
+            <p class="hint">Uses <code>navigator.permissions.query()</code> and <code>navigator.geolocation.getCurrentPosition()</code>.</p>
+            <div class="actions">
+                <button class="btn btn-primary" ws-onclick="checkGeolocationPermission">Check geolocation permission</button>
+                <button class="btn" ws-onclick="requestGeolocation">Request geolocation</button>
+            </div>
+        </section>
 
-        <!--<button ws-onclick="checkMicrophonePermission">Check Microphone Permission</button>
-        <button ws-onclick="requestMicrophone">Request Microphone</button>
-
-        <button ws-onclick="checkNotificationPermission">Check Notification Permission</button>
-        <button ws-onclick="requestNotification">Request Notification</button>-->
-
-        <p>${status}</p>
-    </div>
+        <p class="status" role="status">${status}</p>
+    </main>
     <script type="module" src="Content/WebSharper.Permissions.Sample.min.js"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ module Client =
 
     [<SPAEntryPoint>]
     let Main () =
-        let permissionStatus = Var.Create ""
+        let permissionStatus = Var.Create "Ready. Check a permission to begin."
 
         let permissions = JS.Window.Navigator.Permissions        
 
@@ -37,7 +37,7 @@ module Client =
             ))
 
 
-        IndexTemplate.Main()
+        IndexTemplate()
             .checkGeolocationPermission(fun _ -> 
                 async { 
                     do! checkPermission("geolocation").AsAsync()
@@ -46,5 +46,4 @@ module Client =
             )
             .requestGeolocation(fun _ -> requestGeolocation())
             .status(permissionStatus.View)
-            .Doc()
-        |> Doc.RunById "main"
+            .Bind()
