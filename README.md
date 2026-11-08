@@ -22,7 +22,7 @@ This repository contains:
 
 ![Permissions API sample](docs/sample.png)
 
-The sample doubles as the binding's test case: it queries a permission state and requests a geolocation position in a real browser.
+The sample doubles as the binding's [test case](#running-the-sample): it queries a permission state and requests a geolocation position in a real browser.
 
 - **Sample (this repository):** <https://dotnet-websharper.github.io/Permissions/>
 - **Source repository:** <https://github.com/dotnet-websharper/Permissions>
