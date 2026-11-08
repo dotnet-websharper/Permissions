@@ -1,0 +1,22 @@
+type file
+id WebSharper.Permissions
+authors
+    IntelliFactory
+owners
+    IntelliFactory
+repositoryType git
+repositoryUrl https://github.com/dotnet-websharper/Permissions/
+licenseUrl https://github.com/dotnet-websharper/Permissions/blob/main/LICENSE.md
+iconUrl https://github.com/dotnet-websharper/core/raw/websharper50/tools/WebSharper.png
+projectUrl https://github.com/dotnet-websharper/Permissions
+description
+    WebSharper bindings for Permissions
+tags
+    Web JavaScript F# C#
+files
+    ../WebSharper.Permissions.Extensions/bin/Release/netstandard2.0/WebSharper.Permissions.Extensions.dll ==> lib/netstandard2.0
+    ../WebSharper.Permissions.Extensions/bin/Release/netstandard2.0/WebSharper.Permissions.Extensions.xml ==> lib/netstandard2.0
+    ../WebSharper.Permissions/bin/Release/netstandard2.0/WebSharper.Permissions.dll ==> lib/netstandard2.0
+    ../WebSharper.Permissions/bin/Release/netstandard2.0/WebSharper.Permissions.xml ==> lib/netstandard2.0
+dependencies
+        WebSharper ~> LOCKEDVERSION:[3]

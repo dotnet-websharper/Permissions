@@ -1,130 +1,139 @@
-# WebSharper Permissions API Binding
+# WebSharper.Permissions
 
-This repository provides an F# [WebSharper](https://websharper.com/) binding for the [Permissions API](https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API), enabling seamless integration of permission handling in WebSharper applications.
+[![NuGet](https://img.shields.io/badge/nuget-not%20published-lightgrey)](https://github.com/dotnet-websharper/Permissions)
 
-## Repository Structure
+WebSharper bindings for the [Permissions API](https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API) —
+querying and observing the permission state of browser features such as geolocation, notifications, and the microphone.
 
-The repository consists of two main projects:
+The Permissions API is only available in [secure contexts](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Secure_Contexts)
+(HTTPS or localhost), and some browsers only expose it for a subset of features.
 
-1. **Binding Project**:
+This repository contains:
 
-   - Contains the F# WebSharper binding for the Permissions API.
+| Project | Purpose |
+| --- | --- |
+| `WebSharper.Permissions` | The binding: WIG definitions for `Permissions`, `PermissionStatus`, `PermissionState`, and `PermissionDescriptor`. |
+| `WebSharper.Permissions.Extensions` | `[<Inline>]` client extensions: `navigator.permissions` on `Navigator` and `WorkerNavigator`. |
+| `WebSharper.Permissions.Sample` | An ASP.NET Core SPA that queries the geolocation permission and requests a geolocation position. |
 
-2. **Sample Project**:
-   - Demonstrates how to use the Permissions API with WebSharper syntax.
-   - Includes a GitHub Pages demo: [View Demo](https://dotnet-websharper.github.io/Permissions/).
+## Live demos
+
+**Try it live:** [Open the sample in your browser](https://dotnet-websharper.github.io/Permissions/)
+
+![Permissions API sample](docs/sample.png)
+
+The sample doubles as the binding's [test case](#running-the-sample): it queries a permission state and requests a geolocation position in a real browser.
+
+- **Sample (this repository):** <https://dotnet-websharper.github.io/Permissions/>
+- **Source repository:** <https://github.com/dotnet-websharper/Permissions>
+- **WebSharper bindings:** <https://websharper.com/bindings>
 
 ## Features
 
-- WebSharper bindings for the Permissions API.
-- Query and manage permission statuses for features like notifications, geolocation, and microphone access.
-- Example usage for permission handling in web applications.
-- Hosted demo to explore API functionality.
+- `Permissions` (`query`) and `PermissionStatus` (`name`, `state`, `onchange`).
+- `PermissionState` as a string enum (`granted`, `denied`, `prompt`).
+- `PermissionDescriptor` with optional `userVisibleOnly` and `sysex` fields.
+- `navigator.permissions` on `Navigator` and `WorkerNavigator` in the Extensions assembly.
 
-## Installation and Building
+## Installation
 
-### Prerequisites
+The binding is not currently published to NuGet. Reference the projects from source:
 
-- [.NET SDK](https://dotnet.microsoft.com/download) installed on your machine.
+```bash
+git clone https://github.com/dotnet-websharper/Permissions.git
+```
 
-### Steps
+```xml
+<ItemGroup>
+  <ProjectReference Include="path/to/WebSharper.Permissions/WebSharper.Permissions.fsproj" />
+  <ProjectReference Include="path/to/WebSharper.Permissions.Extensions/WebSharper.Permissions.Extensions.fsproj" />
+</ItemGroup>
+```
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/dotnet-websharper/Permissions.git
-   cd Permissions
-   ```
-
-2. Build the Binding Project:
-
-   ```bash
-   dotnet build WebSharper.Permissions/WebSharper.Permissions.fsproj
-   ```
-
-3. Build and Run the Sample Project:
-
-   ```bash
-   cd WebSharper.Permissions.Sample
-   dotnet build
-   dotnet run
-   ```
-
-4. Open the hosted demo to see the Sample project in action:
-   [https://dotnet-websharper.github.io/Permissions/](https://dotnet-websharper.github.io/Permissions/)
-
-## How to Use the Permissions API
-
-### Example Usage
-
-Below is an example of how to use the Permissions API in a WebSharper project:
+## Usage
 
 ```fsharp
-namespace WebSharper.Permissions.Sample
+namespace WebSharper.Permissions.Demo
 
 open WebSharper
 open WebSharper.JavaScript
-open WebSharper.UI
-open WebSharper.UI.Notation
-open WebSharper.UI.Client
-open WebSharper.UI.Templating
 open WebSharper.Permissions
 
 [<JavaScript>]
-module Client =
-    // The templates are loaded from the DOM, so you just can edit index.html
-    // and refresh your browser, no need to recompile unless you add or remove holes.
-    type IndexTemplate = Template<"wwwroot/index.html", ClientLoad.FromDocument>
-
-    [<SPAEntryPoint>]
-    let Main () =
-        let permissionStatus = Var.Create ""
-
-        // Access the browser's Permissions API
+module Demo =
+    let checkGeolocationPermission () =
         let permissions = JS.Window.Navigator.Permissions
-
-        // Function to check the status of a given permission
-        let checkPermission(permissionName: string) =
-            let permissionQuery = permissions.Query(PermissionDescriptor(name = permissionName))
-
-            // Handle the result of the permission query
-            permissionQuery.Then(fun result ->
-                permissionStatus.Value <- $"{permissionName} permission: {result.State}"
-            ).Catch(fun _ ->
-                permissionStatus.Value <- $"Permission {permissionName} not supported"
-            )
-
-        // Initialize the UI template and bind variables to UI elements
-        IndexTemplate.Main()
-            // Check geolocation permission when the corresponding button is clicked
-            .checkGeolocationPermission(fun _ ->
-                async {
-                    do! checkPermission("geolocation").AsAsync()
-                }
-                |> Async.Start
-            )
-            // Check microphone permission when the corresponding button is clicked
-            .checkMicrophonePermission(fun _ ->
-                async {
-                    do! checkPermission("microphone").AsAsync()
-                }
-                |> Async.Start
-            )
-            // Check notification permission when the corresponding button is clicked
-            .checkNotificationPermission(fun _ ->
-                async {
-                    do! checkPermission("notifications").AsAsync()
-                }
-                |> Async.Start
-            )
-            // Bind the permission status variable to the UI
-            .status(permissionStatus.View)
-            .Doc()
-        |> Doc.RunById "main"
+        permissions.Query(PermissionDescriptor(name = "geolocation"))
+            .Then(fun status -> Console.Log($"geolocation: {status.State}"))
+            .Catch(fun _ -> Console.Log("Permissions API not supported"))
 ```
 
-This example demonstrates how to check the status of a permission before requesting access.
+The `navigator.permissions` accessor is declared in the Extensions assembly and hangs off `JS.Window.Navigator`.
+`query()` returns a `Promise<PermissionStatus>`; `PermissionStatus.state` is a `PermissionState` string enum.
 
-**Note:** If permission prompts do not appear, please check and allow the required permissions manually in your browser settings.
+## Running the sample
 
-For a complete implementation, refer to the [Sample Project](https://dotnet-websharper.github.io/Permissions/).
+Build the sample in Release and serve its static output:
+
+```bash
+dotnet build WebSharper.Permissions.Sample/WebSharper.Permissions.Sample.fsproj -c Release
+python3 -m http.server -d WebSharper.Permissions.Sample/wwwroot 8201
+```
+
+Open <http://localhost:8201/>. Localhost counts as a secure context, so the Permissions API is available.
+
+Alternatively, run the ASP.NET Core host:
+
+```bash
+dotnet run --project WebSharper.Permissions.Sample
+```
+
+## Building from source
+
+### Prerequisites
+
+- [.NET SDK 10](https://dotnet.microsoft.com/download) or later.
+
+### Build
+
+```bash
+dotnet build WebSharper.Permissions.sln -c Release
+```
+
+The binding projects target `netstandard2.0`; the sample targets `net10.0`.
+
+## Deployment
+
+Pushing to `main` triggers `.github/workflows/ghpages.yml`, which builds the sample in Release and publishes
+`WebSharper.Permissions.Sample/wwwroot` to the `gh-pages` branch.
+
+## Repository layout
+
+```
+WebSharper.Permissions/              # binding (WIG definitions)
+  Main.fs
+WebSharper.Permissions.Extensions/   # [<Inline>] client extensions
+  Library.fs
+WebSharper.Permissions.Sample/       # ASP.NET Core SPA demo
+  Client.fs
+  Startup.fs
+  wwwroot/
+    index.html
+    site.css
+.github/workflows/ghpages.yml        # build + deploy the sample to GitHub Pages
+```
+
+## Notes on the API
+
+- **Secure context:** the Permissions API is only exposed in secure contexts. Serve the page over HTTPS or from
+  localhost.
+- **Feature support:** `navigator.permissions.query()` only accepts a subset of permission names, and browsers
+  differ in which ones they support. Querying an unsupported name rejects the promise; handle the rejection.
+- **User gesture:** geolocation and notification permission prompts require a user gesture (for example, a button
+  click).
+- **Change events:** `PermissionStatus.onchange` fires when the permission state changes. Use it to keep the UI
+  in sync.
+
+## License
+
+Apache 2.0 — see [LICENSE.md](LICENSE.md).
