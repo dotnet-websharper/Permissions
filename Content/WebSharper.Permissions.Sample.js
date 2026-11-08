@@ -12,7 +12,7 @@ function Main(){
   const t_1=(t.h.push(EventQ2(t.k, "checkgeolocationpermission", () => t.i, () => {
     const f=() => {
       const permissionName="geolocation";
-      let _3=(permissions.query({name:permissionName}).then((result) => permissionStatus.Set(String(permissionName)+" permission: "+String(result.state))))["catch"](() => permissionStatus.Set("Permission "+permissionName+" not supported"));
+      let _3=(permissions.query({name:permissionName}).then((result) => permissionStatus.Set(permissionName+" permission: "+String(result.state))))["catch"](() => permissionStatus.Set("Permission "+permissionName+" not supported"));
       const x=AsAsync(_3);
       const f_1=() => Return(null);
       return Bind(x, (_4, _5) =>(f_1(_4))(_5));
@@ -3120,7 +3120,7 @@ class Event extends TemplateHole {
 }
 function Handler(name, callback){
   return Attr.A3((el) => {
-    el.addEventListener(name, (d) =>(callback(el))(d), false);
+    el.addEventListener(name, (o) =>(callback(el))(o), false);
   });
 }
 function OnAfterRender(callback){
@@ -3157,7 +3157,7 @@ function DynamicCustom(set_1, view){
 class Attr {
   static HandlerImpl(event, q){
     return Attr.A3((el) => {
-      el.addEventListener(event, (d) =>(q(el))(d), false);
+      el.addEventListener(event, (o) =>(q(el))(o), false);
     });
   }
   static Concat(xs){
